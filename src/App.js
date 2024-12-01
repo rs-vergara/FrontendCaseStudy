@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import { UserProvider } from "./context/UserContext";
+import Layout from "./components/Layout"; // Layout component
+import ProductList from "./pages/ProductList";
+import AddProduct from "./pages/AddProduct";
+import EditProduct from "./pages/EditProduct";
+import Login from "./pages/Login";
+import ViewCart from "./pages/ViewCart"; // Import ViewCart component
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserProvider>
+      <Routes>
+        {/* Public Routes wrapped with Layout */}
+        <Route element={<Layout />}>
+          <Route path="/" element={<ProductList />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/cart" element={<ViewCart />} /> {/* Add this route */}
+        </Route>
+
+        {/* Admin Routes wrapped with Layout */}
+        <Route element={<Layout />}>
+          <Route path="/admin/add-product" element={<AddProduct />} />
+          <Route path="/admin/edit-product" element={<EditProduct />} />
+        </Route>
+      </Routes>
+    </UserProvider>
   );
 }
 
